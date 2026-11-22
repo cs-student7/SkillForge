@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SkillForge – Learn by solving</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+:root{box-sizing:border-box;padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px);padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--ln:#e8eaf3;--tx:#12142b;--mu:#6b7090;--ac:#5b3fd9;--soft:#f0ecff;--r:14px;
+--f:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:light}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:#fff;color:var(--tx);font:15px/1.6 var(--f)}
+h1,h2,h3{margin:0;letter-spacing:-.02em}
+h1{font-size:1.9rem;font-weight:800;line-height:1.2}
+h2{font-size:1.2rem;font-weight:700}
+.mu{color:var(--mu)}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.app{display:grid;grid-template-columns:240px minmax(0,1fr);min-height:100vh;max-width:1720px;margin:0 auto}
+.side{position:sticky;top:0;height:100vh;height:100dvh;overflow-y:auto;display:flex;flex-direction:column;padding:22px 16px;background:#fff;border-right:1px solid var(--ln)}
+.logo{display:flex;align-items:center;gap:10px;padding:4px 10px 24px;font-weight:800;font-size:1.25rem;letter-spacing:-.02em;color:var(--ac);text-decoration:none}
+.lg{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--ac);color:#fff;font-size:1rem}
+.side nav{display:flex;flex-direction:column;gap:4px}
+.side nav a{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;color:var(--tx);text-decoration:none;font-weight:500;transition:background .15s}
+.side nav a:hover{background:#f7f5ff}
+.side nav a.on{background:var(--soft);color:var(--ac);font-weight:600;box-shadow:inset -3px 0 0 var(--ac)}
+nav a[data-p]::before{content:"";width:18px;height:18px;flex:none;background:currentColor;-webkit-mask:var(--i) center/contain no-repeat;mask:var(--i) center/contain no-repeat}
+nav a[data-p=home]{--i:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='7' height='7' rx='1'/><rect x='14' y='3' width='7' height='7' rx='1'/><rect x='14' y='14' width='7' height='7' rx='1'/><rect x='3' y='14' width='7' height='7' rx='1'/></svg>")}
+nav a[data-p=categories]{--i:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/></svg>")}
+nav a[data-p=practice]{--i:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='16 18 22 12 16 6'/><polyline points='8 6 2 12 8 18'/></svg>")}
+nav a[data-p=profile]{--i:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='8' r='4'/><path d='M4 21a8 8 0 0 1 16 0'/></svg>")}
+.main{min-width:0;display:flex;flex-direction:column}
+.top{display:flex;align-items:center;gap:12px;height:68px;padding:0 32px;border-bottom:1px solid var(--ln)}
+#cr{margin-right:auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:.95rem}
+.tk{padding:5px 14px;border:1px solid var(--ln);border-radius:99px;font-size:.85rem;font-weight:500}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) 320px;flex:1}
+.page{min-width:0;padding:32px 32px 64px}
+.rail{display:flex;flex-direction:column;gap:20px;padding:24px;border-left:1px solid var(--ln)}
+.cd{background:#fff;border:1px solid var(--ln);border-radius:var(--r);padding:18px;box-shadow:0 1px 2px #14143c0a}
+.g{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(230px,100%),1fr));gap:16px}
+.hd{display:flex;justify-content:space-between;align-items:center;margin:34px 0 14px}
+.more{color:var(--ac);font-weight:600;text-decoration:none}
+.bt{font:inherit;font-weight:600;background:var(--ac);color:#fff;border:1px solid var(--ac);border-radius:10px;padding:10px 18px;cursor:pointer;text-decoration:none;display:inline-block;transition:filter .15s,border-color .15s}
+.bt:hover{filter:brightness(1.08)}
+.bt.gh{background:#fff;color:var(--tx);border-color:var(--ln)}
+.bt.gh:hover{border-color:var(--ac);filter:none}
+.ic{display:grid;place-items:center;flex:none;width:44px;height:44px;border-radius:12px;background:#eaf1ff;font-size:1.3rem}
+.chip{padding:2px 10px;border-radius:99px;font-size:.72rem;font-weight:600;white-space:nowrap}
+.c0{background:#e6f8ec;color:#15803d}.c1{background:#e6f0ff;color:#1d4ed8}.c2{background:#f2e8ff;color:#7e22ce}.c3{background:#fff0e0;color:#c2410c}.c4{background:#ffe4ef;color:#be185d}
+.bar{height:8px;border-radius:9px;background:#eceef6;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:9px;background:var(--ac)}
+.sc{display:flex;align-items:center;gap:14px}
+.sc b{display:block;font-size:1.6rem;line-height:1.1;font-weight:800}
+.tl{display:flex;flex-direction:column;gap:12px;color:inherit;text-decoration:none;transition:transform .15s,border-color .15s,box-shadow .15s}
+.tl:hover{transform:translateY(-2px);border-color:var(--ac);box-shadow:0 8px 24px #5b3fd91f}
+.fh{display:flex;gap:12px;align-items:flex-start}
+.fh>div{flex:1;min-width:0}
+.fh b{display:block;line-height:1.3}
+.fh small{color:var(--mu)}
+.pl{display:flex;justify-content:space-between;font-size:.85rem;font-weight:500}
+.fl{display:flex;justify-content:space-between;font-size:.85rem;font-weight:600;color:var(--ac)}
+.sr{margin:18px 0 20px}
+.sr input{width:100%;font:inherit;color:var(--tx);padding:12px 16px 12px 44px;border:1px solid var(--ln);border-radius:12px;
+background:#fff url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b7090' stroke-width='2' stroke-linecap='round'><circle cx='11' cy='11' r='7'/><path d='M21 21l-4.3-4.3'/></svg>") 15px center/18px no-repeat}
+.ph{display:flex;gap:14px;align-items:center;margin-bottom:20px}
+.back{display:grid;place-items:center;flex:none;width:40px;height:40px;border:1px solid var(--ln);border-radius:10px;color:var(--tx);text-decoration:none;font-size:1.3rem}
+.meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:.85rem;color:var(--mu);margin-top:4px}
+.st{display:inline-flex;gap:4px}
+.st i{width:9px;height:9px;border-radius:50%;background:#e3e5f0}
+.st i.f{background:var(--ac)}
+.qc{padding:24px}
+.qt{font-size:1.15rem;font-weight:600;margin:0 0 14px}
+pre{font:13.5px/1.6 ui-monospace,Menlo,Consolas,monospace;color:#a7f3d0;background:#0d1020;border-radius:12px;padding:16px;overflow-x:auto;white-space:pre;margin:0 0 6px}
+.op{display:flex;align-items:center;gap:12px;width:100%;text-align:left;font:inherit;color:var(--tx);background:#fff;border:1px solid var(--ln);border-radius:12px;padding:12px 14px;margin-top:10px;cursor:pointer;transition:border-color .15s,background .15s}
+.op b{display:grid;place-items:center;flex:none;width:28px;height:28px;border-radius:8px;background:var(--soft);color:var(--ac);font-size:.85rem}
+.op:hover:not(:disabled){border-color:var(--ac);background:#faf8ff}
+.op:disabled{opacity:.45;cursor:default}
+.op.right{opacity:1;border-color:#22c55e;background:#f0fdf4}
+.op.right b{background:#22c55e;color:#fff}
+.hint{margin:14px 0 0;padding:10px 14px;border-radius:10px;background:#fff8e6}
+.ok{color:#16a34a;font-weight:600}
+.no{color:#dc2626;font-weight:500}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.row{display:flex;align-items:center;flex-wrap:wrap;gap:12px;padding:11px 0;border-bottom:1px solid var(--ln)}
+.row:last-child{border-bottom:0}
+.row span:first-child{flex:1}
+.row .bar{width:120px;flex:none}
+.nmf{display:flex;gap:10px;flex-wrap:wrap}
+.nmf input{flex:1 1 180px;min-width:0;font:inherit;color:var(--tx);padding:10px 14px;border:1px solid var(--ln);border-radius:10px}
+.pc{text-align:center;padding:24px 18px 18px;border:1px solid #e3e3fa;border-radius:20px;background:linear-gradient(180deg,#eef0ff,#f6f1ff)}
+.bav{display:grid;place-items:center;width:84px;height:84px;margin:0 auto 10px;border-radius:50%;background:#fff;font-size:2.4rem;box-shadow:0 4px 14px #5b3fd626}
+.pc>b{display:block;font-size:1.05rem}
+.ps{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.ps div{padding:10px;border-radius:12px;background:#fff;font-size:.8rem;color:var(--mu)}
+.ps strong{display:block;font-size:1.5rem;line-height:1.2;color:var(--ac)}
+.ps div:last-child strong{color:#0f9f6e}
+.lb{padding:20px}
+.lb h3{font-size:1.05rem;margin-bottom:12px}
+.lv{font-size:.72rem;font-weight:600;color:var(--mu);margin-left:6px}
+.lv.on{color:#16a34a}
+.lr{display:flex;align-items:center;gap:12px;padding:8px;border-radius:12px}
+.lr.me{background:var(--soft)}
+.lr div,.you div{min-width:0}
+.lr b,.you b,.pc>b{overflow-wrap:anywhere}
+.lr small,.you small{display:block;color:var(--mu);font-size:.8rem;line-height:1.3}
+.rk{display:grid;place-items:center;flex:none;width:30px;height:30px;border-radius:50%;background:#f1f3f9;font-size:.8rem;font-weight:700}
+.r1{background:#fef3c7;color:#b45309}.r2{background:#e8ecf3;color:#475569}.r3{background:#ffedd5;color:#c2410c}
+.av{display:grid;place-items:center;flex:none;width:38px;height:38px;border-radius:50%;background:var(--c,#7c6cf0);color:#fff;font-size:.8rem;font-weight:700}
+.top .av{background:var(--soft);font-size:1.1rem}
+.you{display:flex;align-items:center;gap:12px;margin-top:14px;padding:12px;border-radius:12px;background:#eef3ff}
+@media(max-width:1100px){
+.cols{grid-template-columns:1fr}
+.rail{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));align-items:start;border-left:0;border-top:1px solid var(--ln)}}
+@media(max-width:820px){
+.app{grid-template-columns:1fr}
+.side{position:static;height:auto;padding:12px 16px;border-right:0;border-bottom:1px solid var(--ln)}
+.logo{padding-bottom:10px}
+.side nav{flex-direction:row;flex-wrap:wrap}
+.side nav a{padding:8px 12px}
+.side nav a.on{box-shadow:none}
+.top{height:56px;padding:0 16px}
+.page{padding:24px 16px 48px}
+.rail{padding:16px}
+.side nav{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.side nav a{flex-direction:column;gap:4px;padding:8px 2px;font-size:.78rem;text-align:center;border-radius:10px}
+.sr input,.nmf input{font-size:16px}}
+@media(max-width:560px){
+h1{font-size:1.5rem}
+.top .av{display:none}
+.page{padding:20px 14px 40px}
+.qc{padding:16px}
+.hd{margin:26px 0 12px}
+.g{gap:12px}
+.row .bar{width:100%}
+.pc{padding:20px 14px 14px}}
+@media(pointer:coarse){.bt,.op,.side nav a{min-height:44px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <a class="logo" href="#/home"><span class="lg">⚒</span>SkillForge</a>
+    <nav>
+      <a data-p="home" href="#/home">Dashboard</a>
+      <a data-p="categories" href="#/categories">Categories</a>
+      <a data-p="practice" id="npr" href="#/practice/0">Practice</a>
+      <a data-p="profile" href="#/profile">Profile</a>
+    </nav>
+  </aside>
+  <div class="main">
+    <header class="top">
+      <div id="cr"></div>
+      <span class="tk">🪙 <b id="pt">200</b> tokens</span>
+      <span class="av" aria-hidden="true">🧑‍💻</span>
+    </header>
+    <div class="cols">
+      <main class="page" id="app"></main>
+      <aside class="rail" id="rail" aria-label="Your profile and leaderboard"></aside>
+    </div>
+  </div>
+</div>
+<script>
+const LV=['Beginner','Elementary','Intermediate','Advanced','Professional'],XP=[10,15,25,35,50],
+RK=['New Explorer','Apprentice','Learner','Builder','Developer','Specialist','Expert','Master','Elite','Legend'];
+const $=s=>document.querySelector(s),h=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a,P=a=>a[R(0,a.length-1)],sh=a=>a.map(x=>[Math.random(),x]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+// three wrong numbers near the right one
+const D=(a,s=3)=>{const o=new Set([a]),f=Number.isInteger(a)?1:.1;for(let g=0;o.size<4;g++){const v=+(a+R(-s-g,s+g)*f).toFixed(2);if(v>=0)o.add(v)}return[...o].slice(1)};
+// build a question: prompt, answer, wrong answers, hint, simple explanation, optional code
+const mk=(p,a,w,hint,ex,c='')=>{a=String(a);w=[...new Set(w.map(String))].filter(x=>x!=a);for(const x of['None of these','Cannot be known','All of these'])if(w.length<3)w.push(x);return{p,c,a,o:sh([a,...w.slice(0,3)]),hint,ex}};
+
+const CT=[['Web Development','🌐'],['Programming Languages','💻'],['Data Structures and Algorithms','🧮'],['Mobile App Development','📱'],['Software Engineering','🛠️'],['Cybersecurity','🔐'],['Networking','🛰️'],['Operating Systems and Linux','🐧'],['Cloud Computing and DevOps','☁️'],['Database Management','🗄️'],['AI and Machine Learning','🤖'],['Data Science and Analytics','📊'],['Robotics and IoT','🦾'],['Blockchain Development','⛓️'],['UI/UX and Product Design','🎨'],['Graphic Design and Digital Media','🖌️'],['3D, Animation and Game Development','🎮'],['Developer Tools and Productivity','⚙️'],['No-Code, Low-Code and Automation','🔁'],['IT Career and Professional Skills','💼']];
+
+// Question generators: two per category. Levels 1–2 use the first, levels 3–5 the second. Numbers scale with the level.
+const G=[
+[L=>{const b=P([10,16,20]),n=R(1,3+L),a=n*b;return mk(`With a root font size of ${b}px, how many px is ${n}rem?`,a,D(a,b),'Multiply the rem value by the root size.',`1rem equals ${b}px here, so ${n}rem is ${n} × ${b} = ${a}px.`)},
+ L=>{const w=R(10,20)*10,p=R(1,4)*5,b=R(1,3),a=w+2*(p+b);return mk(`A content-box element has width ${w}px, padding ${p}px and border ${b}px. What is its total rendered width?`,a,D(a,10),'Padding and border are added on both sides.',`Total = ${w} + 2×${p} + 2×${b} = ${a}px. The box model puts padding and border outside the content.`)}],
+[L=>{const w=P(['python','forge','skill','keyboard','compiler']),a=w.length;return mk('What does this Python code print?',a,D(a,2),'Count every letter.',`len() counts characters. “${w}” has ${a}.`,`print(len("${w}"))`)},
+ L=>{const s=R(1,5),e=s+R(3,6+L*2);let a=0;for(let i=s;i<e;i++)a+=i;return mk('What does this print?',a,D(a,4),'range stops one before the end value.',`The loop adds ${s} up to ${e-1}, which gives ${a}.`,`t = 0\nfor i in range(${s}, ${e}):\n    t += i\nprint(t)`)}],
+[L=>{const k=R(3,4+L),n=2**k-1;return mk(`Worst case, how many comparisons does binary search need on a sorted list of ${n} items?`,k,D(k,2),'Each step cuts the list in half. Count the cuts.',`${n} items can be halved ${k} times before one is left, so ${k} comparisons.`)},
+ L=>{const h=R(2,3+L),a=2**(h+1)-1;return mk(`What is the most nodes a binary tree of height ${h} can have (the root is height 0)?`,a,D(a,3),'Level d can hold 2^d nodes. Add up every level.',`The levels hold 1 + 2 + 4 + … = 2^${h+1} − 1 = ${a} nodes.`)}],
+[L=>{const d=P([1.5,2,3,4]),dp=R(2,9)*40,a=dp*d;return mk(`A view is ${dp}dp wide on a ${d}x density screen. How many physical pixels wide is it?`,a,D(a,40),'Pixels = dp × density.',`${dp} × ${d} = ${a}px. Higher density packs more pixels into the same dp.`)},
+ L=>{const mb=R(2,9+L*9)*10,sp=P([10,20,40,80]),a=+(mb*8/sp).toFixed(1);return mk(`About how many seconds does a ${mb}MB app download take at ${sp}Mbps?`,a,D(a,4),'1 byte is 8 bits, so multiply MB by 8 first.',`${mb}MB × 8 = ${mb*8} megabits. Divide by ${sp}Mbps to get ${a} seconds.`)}],
+[L=>{const x=R(0,3),y=R(0,9),z=R(0,9),t=P([0,1,2]),n=[`${x}.${y}.${z+1}`,`${x}.${y+1}.0`,`${x+1}.0.0`],f=['a bug fix','a backwards-compatible feature','a breaking change'];return mk(`The current version is ${x}.${y}.${z}. You release ${f[t]}. What is the next semantic version?`,n[t],[...n.filter((_,i)=>i!=t),`${x}.${y+1}.${z+1}`],'The format is MAJOR.MINOR.PATCH.',`Bug fixes raise PATCH. New features raise MINOR and reset PATCH. Breaking changes raise MAJOR and reset the rest.`)},
+ L=>{const n=R(1,4+L),m=R(0,2+L),a=n+m+1;return mk(`A function has ${n} if statements and ${m} loops, with no other branching. What is its cyclomatic complexity?`,a,D(a,2),'Start at 1, then add 1 for every decision.',`Each if or loop adds one extra path: 1 + ${n} + ${m} = ${a}.`)}],
+[L=>{const w=P(['HACK','CODE','FORGE','SKILL','SECURE']),k=R(1,5+L),e=j=>[...w].map(c=>String.fromCharCode((c.charCodeAt(0)-65+j)%26+65)).join('');return mk(`Encrypt “${w}” with a Caesar cipher using a shift of ${k}.`,e(k),[e(k+1),e(k+2),e(k+25)],'Move each letter forward in the alphabet. Z wraps to A.',`Every letter moves ${k} place${k>1?'s':''} forward: ${w} becomes ${e(k)}.`)},
+ L=>{const[c,n]=P([[10,'digits'],[26,'lowercase letters'],[62,'letters and digits']]),l=R(3,4+L),a=c**l;return mk(`How many ${l}-character passwords can you make using only ${n} (${c} options per position)?`,a,[c*l,a*c,Math.round(a/c)],'Multiply the choices once for every position.',`${c} choices for each of ${l} positions gives ${c}^${l} = ${a.toLocaleString('en-US')}. Each extra character multiplies the work for an attacker.`)}],
+[L=>{const n=R(5,60+L*60),b=n.toString(2).padStart(8,'0');return mk(`Convert the binary number ${b} to decimal.`,n,D(n,6),'Add the place values (128, 64, 32 … 1) wherever there is a 1.',`Each 1 adds its place value, and the total is ${n}.`)},
+ L=>{const p=R(24,30),a=2**(32-p)-2;return mk(`How many usable host addresses does a /${p} network have?`,a,[a+2,a*2,2**(32-p)-1],'Addresses = 2^(32 − prefix). Two are reserved.',`/${p} leaves ${32-p} host bits, which is ${2**(32-p)} addresses. The network and broadcast addresses are reserved, so ${a} are usable.`)}],
+[L=>{const T=[[7,5,5],[7,5,4],[6,4,4],[7,0,0],[6,6,4],[7,7,5],[6,4,0]],sy=d=>d.map(v=>(v&4?'r':'-')+(v&2?'w':'-')+(v&1?'x':'-')).join(''),d=P(T);return mk(`Which permissions does chmod ${d.join('')} give (owner, group, others)?`,sy(d),sh(T.filter(x=>x!=d)).map(sy),'Read = 4, write = 2, execute = 1. Add them for each digit.',`Each digit adds r=4, w=2, x=1. So ${d.join('')} means ${sy(d)}.`)},
+ L=>{const b=Array.from({length:R(3,4+(L>3))},()=>R(2,12)),a=+(b.reduce((s,x,i)=>s+b.slice(0,i).reduce((q,y)=>q+y,0),0)/b.length).toFixed(1);return mk(`Processes arrive together with burst times [${b}] ms and run in FIFO order. What is the average waiting time (ms)?`,a,D(a,3),'Each process waits for all the earlier ones to finish.',`Each waiting time is the running total before that process starts. Their average is ${a} ms.`)}],
+[L=>{const s=P([99,99.9,99.99]),a=+(43200*(1-s/100)).toFixed(1);return mk(`A service promises ${s}% uptime. Roughly how many minutes of downtime are allowed in a 30-day month?`,a,D(a,Math.max(2,a/5|0)),'A 30-day month has 43,200 minutes.',`The allowed downtime is ${(100-s).toFixed(2)}% of 43,200 minutes, which is ${a} minutes.`)},
+ L=>{const r=R(2,9)*100*(L+1),c=P([50,100,150,200]),a=Math.ceil(r*1.2/c);return mk(`Traffic is ${r} requests per second and each instance handles ${c}. With 20% spare capacity, how many instances do you need?`,a,D(a,2),'Multiply traffic by 1.2, divide by capacity, then round up.',`${r} × 1.2 = ${r*1.2}. Divided by ${c} that is ${(r*1.2/c).toFixed(2)}, rounded up to ${a}.`)}],
+[L=>{const g=Array.from({length:6},()=>R(18,60)),x=R(25,45),a=g.filter(v=>v>x).length;return mk('How many rows does this query return?',a,D(a,2),'Count the ages that are bigger than the number. Equal does not count.',`${a} of the ages are above ${x}.`,`users.age = [${g}]\nSELECT COUNT(*) FROM users WHERE age > ${x};`)},
+ L=>{const n=R(2,9+L),m=R(2,9+L),a=n*m;return mk(`Table A has ${n} rows and table B has ${m} rows. How many rows does a CROSS JOIN return?`,a,[n+m,Math.max(n,m),a+n],'Every row of A pairs with every row of B.',`${n} × ${m} = ${a}. A cross join builds every possible pair.`)}],
+[L=>{const t=P([20,25,40,50,80]),c=R(Math.ceil(t/2),t-1),a=+(c/t*100).toFixed(1);return mk(`A model gets ${c} of ${t} test predictions right. What is its accuracy (%)?`,a,D(a,6),'Accuracy = correct ÷ total × 100.',`${c} ÷ ${t} × 100 = ${a}%.`)},
+ L=>{const w=R(2,9),lr=P([.1,.5,.01]),g=R(2,9),a=+(w-lr*g).toFixed(2);return mk(`Gradient descent: weight ${w}, learning rate ${lr}, gradient ${g}. What is the weight after one update?`,a,[+(w+lr*g).toFixed(2),+(w-g).toFixed(2),+(lr*g).toFixed(2)],'New weight = weight − learning rate × gradient.',`${lr} × ${g} = ${+(lr*g).toFixed(2)}. Subtract it from ${w} to get ${a}. The model steps downhill, against the slope.`)}],
+[L=>{const m=R(10,40),a1=R(1,9),b=R(1,9),g=sh([m-a1,m+a1,m-b,m+b,m]);return mk(`What is the mean of ${g.join(', ')}?`,m,D(m,3),'Add everything, then divide by how many numbers there are.',`The sum is ${g.reduce((s,x)=>s+x)} and there are 5 numbers, so the mean is ${m}.`)},
+ L=>{const n=5+2*(L>3),g=Array.from({length:n},()=>R(1,40)),s=[...g].sort((x,y)=>x-y),a=s[n>>1];return mk(`What is the median of ${g.join(', ')}?`,a,s.filter(x=>x!=a),'Sort the numbers first, then take the middle one.',`Sorted: ${s.join(', ')}. The middle value is ${a}.`)}],
+[L=>{const i=R(1,6),r=P([2,5,10,20]),v=i*r;return mk(`A ${v}V supply drives a ${r}Ω resistor. What current flows (A)?`,i,D(i,2),'Ohm’s law: current = voltage ÷ resistance.',`${v} ÷ ${r} = ${i}A.`)},
+ L=>{const[x,y,a]=P([[6,3,2],[12,4,3],[20,5,4],[30,6,5],[10,40,8]]);return mk(`Two resistors, ${x}Ω and ${y}Ω, are wired in parallel. What is the total resistance (Ω)?`,a,[x+y,(x+y)/2,Math.min(x,y)],'Parallel: (R1 × R2) ÷ (R1 + R2).',`(${x} × ${y}) ÷ (${x} + ${y}) = ${x*y} ÷ ${x+y} = ${a}Ω. Parallel paths always lower the total.`)}],
+[L=>{const n=R(1,3+L),a=50/2**n;return mk(`A chain starts with a 50-coin block reward that halves each cycle. What is the reward after ${n} halving${n>1?'s':''}?`,a,[a*2,a/2,50-n*5],'Divide by 2 once for every halving.',`50 ÷ 2^${n} = ${a}.`)},
+ L=>{const k=R(2,4+L),n=2**k;return mk(`A Merkle tree has ${n} leaf transactions. How many parent nodes does it have in total?`,n-1,[n,n*2,n/2],'Each level up has half as many nodes as the one below.',`Halving each level adds up to ${n-1} parent nodes.`)}],
+[L=>{const t=P([20,25,40,50]),c=R(Math.ceil(t/2),t-1),a=+(c/t*100).toFixed(1);return mk(`In a usability test, ${c} of ${t} people finished the task. What is the task success rate (%)?`,a,D(a,6),'Divide finished by total, then multiply by 100.',`${c} ÷ ${t} × 100 = ${a}%.`)},
+ L=>{const A=R(20,50),B=A+R(5,30),a=+((B-A)/A*100).toFixed(1);return mk(`In an A/B test with 1000 visitors each, version A got ${A} sign-ups and B got ${B}. By what percent did B beat A?`,a,D(a,8),'Lift = (B − A) ÷ A × 100.',`The gain is ${B-A}. ${B-A} ÷ ${A} × 100 = ${a}%.`)}],
+[L=>{const v=[0,1,2].map(()=>P([16,32,64,96,128,160,192,224,255])),x=v.map(n=>n.toString(16).padStart(2,'0')).join('');return mk(`What is the red value (0–255) of the colour #${x}?`,v[0],D(v[0],32),'The first two hex digits are red. Convert them to decimal.',`“${x.slice(0,2)}” in hex equals ${v[0]} in decimal.`)},
+ L=>{const w=R(2,8+L*2),d=P([150,300]),a=w*d;return mk(`You print an image ${w} inches wide at ${d} dpi. How many pixels wide must it be?`,a,[a*2,w+d,a/2],'Pixels = inches × dpi.',`${w} × ${d} = ${a}px for a sharp print.`)}],
+[L=>{const f=P([20,25,40,50,100,125]),a=1000/f;return mk(`A game runs at ${f} FPS. How long does each frame take (ms)?`,a,[f,1000-f,a*2],'Frame time = 1000 ms ÷ FPS.',`1000 ÷ ${f} = ${a}ms per frame.`)},
+ L=>{const k=R(1,1+L),[x,y,d]=P([[3,4,5],[5,12,13],[8,15,17],[7,24,25]]),a0=R(0,9),b0=R(0,9);return mk(`A player stands at (${a0}, ${b0}) and an enemy at (${a0+x*k}, ${b0+y*k}). How far apart are they?`,d*k,D(d*k,3),'Use Pythagoras: distance = √(dx² + dy²).',`dx = ${x*k} and dy = ${y*k}. √(${(x*k)**2} + ${(y*k)**2}) = ${d*k}.`)}],
+[L=>{const n=R(5,20+L*10),k=R(1,4);return mk(`You have ${n} commits and run git reset --hard HEAD~${k}. How many commits remain?`,n-k,D(n-k,2),'HEAD~k means k commits back.',`Reset removes the last ${k} commits: ${n} − ${k} = ${n-k}. The --hard flag also throws away their file changes.`)},
+ L=>{const s=Array.from({length:6},()=>P(['go','12','cat','305','x9','dev','7'])).join(' '),m=s.match(/\d+/g)||[];return mk('How many matches does this regular expression find?',m.length,D(m.length,2),'\\d+ matches every run of digits, even inside a word.',`Matches: ${m.join(', ')||'none'}. Each separate run of digits counts once.`,`/\\d+/g\nText: "${s}"`)}],
+[L=>{const r=R(2,20)*(L+1),d=P([20,22,30]),a=r*d;return mk(`An automation runs ${r} times a day for ${d} days. How many runs is that?`,a,D(a,r),'Multiply runs per day by the number of days.',`${r} × ${d} = ${a} runs.`)},
+ L=>{const s=R(2,5),m=P([100,750,2000]),a=Math.floor(m/s);return mk(`Each run of your workflow uses ${s} tasks and your plan allows ${m} tasks a month. How many full runs fit?`,a,[Math.ceil(m/s),m-s,m*s],'Divide the allowance by tasks per run and round down.',`${m} ÷ ${s} = ${(m/s).toFixed(1)}. Only whole runs count, so ${a}.`)}],
+[L=>{const b=R(3,9)*10000,p=P([5,10,15,20]),a=Math.round(b*(100+p)/100);return mk(`Your salary is $${b.toLocaleString('en-US')} and you get a ${p}% raise. What is the new salary ($)?`,a,[b*p/100,b+p,Math.round(b*(100-p)/100)],'New salary = old salary × (1 + percent ÷ 100).',`${b} × ${1+p/100} = ${a}.`)},
+ L=>{const r=R(15,80),a=r*40*52;return mk(`A job pays $${r} per hour for 40 hours a week, 52 weeks a year. What is the yearly pay ($)?`,a,[r*40*12,r*40*50,r*52],'Hours per year = 40 × 52.',`${r} × 40 × 52 = ${a}.`)}]
+];
+
+// More question types, added on top of the originals. Each category gets one easier and one harder extra.
+const X=[
+[L=>{const w=R(2,10)*100,p=P([10,20,25,50,75]),a=w*p/100;return mk(`A parent box is ${w}px wide. A child has width: ${p}%. How many px wide is the child?`,a,D(a,w/10),'Percent of the parent width.',`${p}% of ${w}px = ${w} × ${p/100} = ${a}px.`)},
+ L=>{const i=R(0,2),c=R(0,3),t=R(1,3),s=[...Array(i).fill('#nav'),...Array(c).fill('.item'),...Array(t).fill('li')].join(' '),a=`${i}-${c}-${t}`;return mk('What is the specificity (IDs-classes-tags) of this CSS selector?',a,[`${c}-${i}-${t}`,`${i}-${t}-${c}`,`${i}-${c}-${t+1}`],'Count #ids, then .classes, then tag names.',`IDs ${i}, classes ${c}, tags ${t}, so ${a}. IDs outrank classes, and classes outrank tags.`,s)}],
+[L=>{const a=R(10,60),b=R(3,9),o=P(['%','//']),r=o=='%'?a%b:Math.floor(a/b);return mk('What does this Python code print?',r,D(r,2),o=='%'?'% gives the remainder after dividing.':'// divides and rounds down.',`${a} ÷ ${b} is ${Math.floor(a/b)} remainder ${a%b}. So ${a} ${o} ${b} = ${r}.`,`print(${a} ${o} ${b})`)},
+ L=>{const n=R(5,8+L);let a=0;for(let i=1;i<n;i++)if(i%2==0)a+=i*i;return mk('What does this print?',a,D(a,4),'Only even numbers count. Square each one, then add.',`Even numbers below ${n}, squared and added, give ${a}.`,`print(sum(x * x for x in range(1, ${n}) if x % 2 == 0))`)}],
+[L=>{const q=sh([1,2,3,4,5,6,7,8,9]).slice(0,4),k=R(1,3),a=q[k];return mk(`A queue holds [${q}] with the front on the left. After ${k} dequeue${k>1?'s':''}, what is at the front?`,a,q.filter(x=>x!=a),'A queue is first in, first out: the front leaves first.',`Each dequeue removes the front item. After ${k}, the front is ${a}.`)},
+ L=>{const q=sh([1,2,3,4,5,6,7,8,9]).slice(0,5),b=[...q];for(let i=0;i<4;i++)if(b[i]>b[i+1])[b[i],b[i+1]]=[b[i+1],b[i]];return mk(`One pass of bubble sort on [${q}] gives which array?`,`[${b}]`,[`[${q}]`,`[${[...q].sort((x,y)=>x-y)}]`,`[${[...q].reverse()}]`],'Compare neighbours from left to right and swap if they are out of order.',`One pass carries the largest value toward the end: [${b}]. The list is not necessarily fully sorted yet.`)}],
+[L=>{const w=R(1,8)*160,a=w*9/16;return mk(`A 16:9 screen is ${w}px wide. How tall is it (px)?`,a,[w*16/9,w-9,w/2],'Height = width × 9 ÷ 16.',`${w} × 9 ÷ 16 = ${a}px.`)},
+ L=>{const B=P([3000,4000,5000]),m=P([100,250,400,500]),a=+(B/m).toFixed(1);return mk(`A ${B}mAh battery powers an app that drains ${m}mAh per hour. About how many hours does it last?`,a,D(a,2),'Hours = capacity ÷ drain per hour.',`${B} ÷ ${m} = ${a} hours.`)}],
+[L=>{const v=P([20,25,30]),s=sh([v-5,v,v+5]);return mk(`A team finished ${s.join(', ')} story points in three sprints. What is their average velocity?`,v,D(v,5),'Add the three numbers and divide by 3.',`${s.join(' + ')} = ${v*3}. Divided by 3 that is ${v} points per sprint.`)},
+ L=>{const B=R(5,15)*10,v=P([20,25,30]),a=Math.ceil(B/v);return mk(`The backlog has ${B} points and the team delivers ${v} points per sprint. How many sprints are needed?`,a,D(a,1),'Divide the backlog by velocity, then round up.',`${B} ÷ ${v} = ${(B/v).toFixed(2)}. A partly used sprint still counts, so ${a}.`)}],
+[L=>{const a=R(1,15+L*10),b=R(1,15+L*10),r=a^b;return mk(`What is ${a} XOR ${b}?`,r,D(r,3),'XOR gives 1 only where the two bits differ.',`In binary ${a.toString(2)} XOR ${b.toString(2)} = ${r.toString(2)}, which is ${r}.`)},
+ L=>{const c=P([10,26,62,94]),l=R(6,12+L),a=+(l*Math.log2(c)).toFixed(1);return mk(`Roughly how many bits of entropy does a random ${l}-character password have if each character comes from ${c} symbols?`,a,D(a,6),'Entropy = length × log₂(symbols).',`log₂(${c}) is about ${Math.log2(c).toFixed(2)}. Times ${l} is about ${a} bits. More bits means harder to guess.`)}],
+[L=>{const[n,a]=P([['HTTP',80],['HTTPS',443],['SSH',22],['FTP',21],['SMTP',25],['DNS',53]]);return mk(`Which default port does ${n} use?`,a,sh([80,443,22,21,25,53]).filter(x=>x!=a),'Think of the service’s most common port number.',`${n} uses port ${a} by default.`)},
+ L=>{const p=R(16,24),q=p+R(1,6),a=2**(q-p);return mk(`How many /${q} subnets fit inside one /${p} network?`,a,[a*2,a/2,q-p],'Each extra prefix bit doubles the number of subnets.',`${q} − ${p} = ${q-p} extra bits, so 2^${q-p} = ${a} subnets.`)}],
+[L=>{const T=[['list files','ls'],['show the current folder','pwd'],['make a folder','mkdir'],['delete a file','rm'],['copy a file','cp'],['move or rename a file','mv'],['show a file’s contents','cat'],['search text inside files','grep']],[d,a]=P(T);return mk(`Which Linux command will ${d}?`,a,sh(T.map(x=>x[1]).filter(x=>x!=a)),'Most commands are short abbreviations.',`${a} is the command to ${d}.`)},
+ L=>{const s=P([1,2,4]),m=R(5000,60000),a=Math.floor(m/(s*1024));return mk(`Memory pages are ${s}KB each. Which page number holds byte address ${m}?`,a,D(a,2),'Page number = address ÷ page size in bytes, rounded down.',`${s}KB = ${s*1024} bytes. ${m} ÷ ${s*1024} = ${(m/(s*1024)).toFixed(2)}, rounded down to page ${a}.`)}],
+[L=>{const n=R(2,9),c=P([2,5,10]),t=R(2,24),a=n*c*t;return mk(`${n} servers cost $${c} per hour each. What is the total cost for ${t} hours ($)?`,a,[n*c,c*t,n+c*t],'Servers × price per hour × hours.',`${n} × ${c} × ${t} = ${a}.`)},
+ L=>{const p=P([90,95,99]),a=+((1-((100-p)/100)**2)*100).toFixed(2);return mk(`One server is up ${p}% of the time. If two independent copies run side by side and either can serve users, what is the combined availability (%)?`,a,[p,+(p*2-100).toFixed(2),+((p+100)/2).toFixed(2)],'The service is down only when both copies are down.',`The chance both fail is ${(100-p)/100} × ${(100-p)/100} = ${(((100-p)/100)**2).toFixed(4)}. Availability = ${a}%.`)}],
+[L=>{const g=Array.from({length:5},()=>R(5,50)),f=P(['MAX','MIN','SUM','AVG']),s=g.reduce((x,y)=>x+y),a=f=='MAX'?Math.max(...g):f=='MIN'?Math.min(...g):f=='SUM'?s:+(s/5).toFixed(1);return mk('What does this query return?',a,D(a,3),`${f} works on every price in the column.`,`The prices are ${g.join(', ')}, so ${f} gives ${a}.`,`price = [${g}]\nSELECT ${f}(price) FROM items;`)},
+ L=>{const g=Array.from({length:8},()=>P(['A','B','C','D'])),a=new Set(g).size;return mk('How many rows does this query return?',a,[a+1,a-1,8].filter(x=>x>0),'GROUP BY returns one row for each different value.',`The values contain ${a} different categories, so ${a} rows come back.`,`category = [${g}]\nSELECT category, COUNT(*) FROM items\nGROUP BY category;`)}],
+[L=>{const n=P([100,200,500,1000]),p=P([60,70,80]),a=n*(100-p)/100;return mk(`You split ${n} samples with ${p}% for training. How many samples are left for testing?`,a,[n*p/100,n-p,a*2],'Testing share = 100% − training share.',`${100-p}% of ${n} = ${a}.`)},
+ L=>{const tp=R(5,40),x=R(2,20),m=P(['precision','recall']),a=+(tp/(tp+x)*100).toFixed(1);return mk(`A model has ${tp} true positives and ${x} ${m=='precision'?'false positives':'false negatives'}. What is its ${m} (%)?`,a,D(a,6),m=='precision'?'Precision = TP ÷ (TP + FP).':'Recall = TP ÷ (TP + FN).',`${tp} ÷ (${tp} + ${x}) × 100 = ${a}%. ${m=='precision'?'Precision asks how many flagged items were right.':'Recall asks how many real cases were found.'}`)}],
+[L=>{const m=R(1,9),o=sh([1,2,3,4,5,6,7,8,9].filter(x=>x!=m)).slice(0,4),g=sh([m,m,m,...o]);return mk(`What is the mode (most frequent value) of ${g.join(', ')}?`,m,o,'Look for the number that appears most often.',`${m} appears 3 times and every other number appears once.`)},
+ L=>{const a=P([40,80,200,400]),p=P([10,20,25,40,50]),b=a*(100+p)/100;return mk(`Monthly sales rose from ${a} to ${b}. What is the percentage increase?`,p,D(p,5),'Increase = (new − old) ÷ old × 100.',`The gain is ${b-a}. ${b-a} ÷ ${a} × 100 = ${p}%.`)}],
+[L=>{const v=P([3.3,5,12]),d=P([10,25,50,75]),a=+(v*d/100).toFixed(2);return mk(`A ${v}V pin runs PWM at a ${d}% duty cycle. What is the average voltage (V)?`,a,D(a,v),'Average = supply voltage × duty cycle.',`${v} × ${d/100} = ${a}V.`)},
+ L=>{const v=P([5,6,9,12,24]),i=R(1,4+L),a=v*i;return mk(`A motor draws ${i}A at ${v}V. How much power does it use (W)?`,a,[v+i,v/i,a*2],'Power = voltage × current.',`${v} × ${i} = ${a}W.`)}],
+[L=>{const b=P([128,160,256,512]),a=b/4;return mk(`A hash is ${b} bits long. How many hex characters does it take to write it?`,a,[b/8,b/2,b],'One hex character stands for 4 bits.',`${b} ÷ 4 = ${a} hex characters.`)},
+ L=>{const d=R(1,4),a=16**d;return mk(`A mining puzzle needs a hash starting with ${d} zero hex digit${d>1?'s':''}. About how many tries does it take on average?`,a,[16*d,10**d,d**16],'Each hex digit has 16 possible values.',`Each extra zero multiplies the work by 16: 16^${d} = ${a}.`)}],
+[L=>{const n=R(2,4),w=R(80,200),g=P([8,16,24]),a=n*w+(n-1)*g;return mk(`${n} cards are each ${w}px wide with ${g}px gaps between them. What is the total width (px)?`,a,[n*(w+g),n*w,a+g],'Gaps sit between cards, so there is one fewer gap than cards.',`${n} × ${w} + ${n-1} × ${g} = ${a}px.`)},
+ L=>{const n=P([3,7,15,31]),a=Math.log2(n+1);return mk(`Hick’s law says decision time grows with log₂(n + 1). For n = ${n} options, what is log₂(n + 1)?`,a,[a+1,a-1,n],'Add 1 to n, then ask: 2 to what power gives that number?',`${n} + 1 = ${n+1}, and 2^${a} = ${n+1}. More choices make people slower to decide.`)}],
+[L=>{const[w,t]=P([[4,3],[16,9],[3,2]]),k=R(50,150),m=R(20,90),a=t*m;return mk(`An image is ${w*k}×${t*k}px. Scaled to ${w*m}px wide with the same ratio, how tall is it (px)?`,a,[w*m,t*k,a+t],'Keep the ratio: scale the height by the same factor.',`The width goes from ${w*k} to ${w*m}, a factor of ${m}/${k}. The height follows: ${t*k} × ${m}/${k} = ${a}px.`)},
+ L=>{const v=sh([16,32,64,96,128,160,192,224,255]).slice(0,3),x=a=>'#'+a.map(n=>n.toString(16).padStart(2,'0')).join('').toUpperCase(),r=x(v);return mk(`What is rgb(${v}) as a hex code?`,r,[x([v[1],v[0],v[2]]),x([v[2],v[1],v[0]]),x([v[0],v[2],v[1]])],'Convert each number to two hex digits (red, green, blue).',`${v.map(n=>`${n} → ${n.toString(16).padStart(2,'0').toUpperCase()}`).join(', ')}. Joined together: ${r}.`)}],
+[L=>{const f=P([30,60,120]),t=R(2,9),a=f*t;return mk(`At ${f} FPS, how many frames are drawn in ${t} seconds?`,a,[f+t,f/t,a*2],'Frames = FPS × seconds.',`${f} × ${t} = ${a} frames.`)},
+ L=>{const a=[0,0,0].map(()=>R(-5,5)),b=[0,0,0].map(()=>R(-5,5)),r=a.reduce((s,x,i)=>s+x*b[i],0);return mk(`What is the dot product of (${a}) and (${b})?`,r,D(r,4),'Multiply matching parts, then add the results.',`${a.map((x,i)=>`(${x}×${b[i]})`).join(' + ')} = ${r}.`)}],
+[L=>{const T=[['save your changes to history','git commit'],['download a repository','git clone'],['see which files changed','git status'],['upload your commits','git push'],['fetch and merge remote changes','git pull'],['combine a branch into the current one','git merge']],[d,a]=P(T);return mk(`Which Git command will ${d}?`,a,sh(T.map(x=>x[1]).filter(x=>x!=a)),'Think about what the verb means.',`${a} is used to ${d}.`)},
+ L=>{const n=R(20,100),s=R(2,10),a=n-s+1;return mk(`A file has ${n} lines. How many lines does tail -n +${s} print?`,a,[n-s,s,n],'+N means start at line N and print to the end.',`It starts at line ${s} and runs to line ${n}: ${n} − ${s} + 1 = ${a} lines.`)}],
+[L=>{const m=P([5,10,15,30]),r=P([4,6,8,12,20]),a=+(m*r/60).toFixed(1);return mk(`A task takes ${m} minutes by hand and happens ${r} times a week. How many hours a week does automating it save?`,a,D(a,2),'Total minutes ÷ 60 gives hours.',`${m} × ${r} = ${m*r} minutes, which is ${a} hours.`)},
+ L=>{const c=P([20,29,49]),t=R(4,12),w=P([15,20,30]),a=t*w-c;return mk(`An automation tool costs $${c} a month and saves ${t} hours worth $${w} each. What is the net monthly saving ($)?`,a,[t*w+c,t*w,c],'Value of time saved minus the tool cost.',`${t} × ${w} = ${t*w}. Minus ${c} leaves ${a}.`)}],
+[L=>{const n=R(20,60),d=R(5,12),a=Math.ceil(n/d);return mk(`You want to solve ${n} practice problems in ${d} days. How many per day do you need (rounded up)?`,a,D(a,1),'Divide, then round up so you finish on time.',`${n} ÷ ${d} = ${(n/d).toFixed(1)}. Rounding up gives ${a} a day.`)},
+ L=>{const s=R(3,9)*10000,t=P([10,20,25,30]),a=s*(100-t)/100;return mk(`A $${s.toLocaleString('en-US')} salary is taxed at ${t}%. What is the take-home pay ($)?`,a,[s*t/100,s-t,s],'Take-home = salary × (1 − tax rate).',`${t}% of ${s} is ${s*t/100}. ${s} − ${s*t/100} = ${a}.`)}]
+];
+G.forEach((g,i)=>g.push(...X[i]));
+
+// Saved progress (this browser only)
+const def=()=>({t:200,p:0,s:0,last:0,name:'',key:'',lv:Array(20).fill(0),k:Array(20).fill(0)});
+let S=def();
+try{Object.assign(S,JSON.parse(localStorage.getItem('skillforge1')))}catch(e){}
+const save=()=>{try{localStorage.setItem('skillforge1',JSON.stringify(S))}catch(e){}};
+
+let cat=0,cur=null,done=false,hinted=false,bad=new Set(),fb='',rs=false,pg='home',note='';
+const newQ=()=>{const L=S.lv[cat],g=G[cat],pl=L<2?[g[0],g[2]]:L<4?[g[1],g[2],g[3]]:[g[1],g[3]],o=cur;let n=0;do cur=P(pl)(L);while(o&&cur.p==o.p&&++n<6);done=hinted=false;bad=new Set();fb='';S.last=cat;save()};
+const ex=()=>`<p><b>In simple terms:</b> ${h(cur.ex)}</p>`;
+
+// Shared leaderboard and unique names. Uses the hosting database when it is available; otherwise this device only.
+let db=null,me=null,online=false,players=[];
+const keyOf=n=>n.toLowerCase().replace(/[^a-z0-9]/g,'');
+const push=()=>{if(db&&me&&S.key)db.doc('players/'+me).set({name:S.name,key:S.key,points:S.p,solved:S.s}).catch(()=>{})};
+async function initDb(){
+  if(typeof claude=='undefined')return;
+  try{
+    db=await claude.use('db');const u=await claude.use('user');me=u?await u.id():null;
+    if(!db||!me){db=null;return}
+    if(S.key){const q=await db.collection('players').where('key','==',S.key).get();
+      if(q.docs.some(d=>d.id!==me)){S.name=S.key='';save();note='Your saved name was taken by someone else. Please choose a new one.'}}
+    db.collection('players').orderBy('points','desc').limit(100).onSnapshot(
+      s=>{online=true;players=s.docs.map(d=>({id:d.id,...d.data()}));$('#rail').innerHTML=rail()},
+      ()=>{online=false;$('#rail').innerHTML=rail()});
+    push();
+  }catch(e){db=null}
+}
+async function saveName(){
+  const say=(t,ok)=>{const m=$('#nm');if(m){m.className=ok?'ok':'no';m.textContent=t}};
+  const v=$('#nin').value.trim().replace(/\s+/g,' '),k=keyOf(v);note='';
+  if(!/^[A-Za-z0-9 _-]{2,20}$/.test(v)||k.length<2)return say('Use 2–20 letters, numbers, spaces, - or _.');
+  if(k===S.key){S.name=v;save();push();draw();return say('Name updated.',1)}
+  if(!db||!me){S.name=v;S.key=k;save();draw();return say('Saved on this device. Duplicate names can only be checked when the shared leaderboard is online.',1)}
+  try{
+    const q=await db.collection('players').where('key','==',k).get();
+    if(q.docs.some(d=>d.id!==me))return say('That name is already taken. Please choose another.');
+    S.name=v;S.key=k;save();await db.doc('players/'+me).set({name:v,key:k,points:S.p,solved:S.s});
+    draw();say('Name saved. You are on the leaderboard!',1);
+  }catch(e){say('Could not reach the leaderboard. Please try again.')}
+}
+
+const AC=['#6d5dfc','#0ea5a4','#f59e0b','#ec4899','#3b82f6'],
+TT={home:'Dashboard',categories:'Categories',practice:'Practice',profile:'Profile'};
+const gr=()=>{const H=new Date().getHours();return H<12?'Good morning':H<18?'Good afternoon':'Good evening'};
+const pct=i=>Math.min(100,Math.round((S.lv[i]*3+S.k[i])/15*100));
+const sc=(ic,k,v)=>`<div class="cd sc"><span class="ic">${ic}</span><div><b>${h(v)}</b><span class="mu">${h(k)}</span></div></div>`;
+const fc=i=>{const L=S.lv[i],p=pct(i);return `<a class="tl cd" href="#/practice/${i}"><div class="fh"><span class="ic">${CT[i][1]}</span><div><b>${h(CT[i][0])}</b><small>+${XP[L]} pts per answer</small></div><span class="chip c${L}">${LV[L]}</span></div>
+<div class="pl"><span>Progress</span><span>${p}%</span></div><div class="bar"><i style="width:${p}%"></i></div>
+<div class="fl"><span class="mu">Streak ${Math.min(3,S.k[i])}/3</span><span>Continue →</span></div></a>`};
+
+const VIEW={
+home:()=>`<h1>${gr()}${S.name?', '+h(S.name):''}!</h1><p class="mu">Ready to continue your learning journey?</p>
+<div class="hd"><h2>Your progress</h2></div>
+<div class="g">${sc('⭐','Points',S.p)}${sc('🪙','Tokens',S.t)}${sc('✅','Solved',S.s)}</div>
+<div class="hd"><h2>Continue learning</h2><a class="more" href="#/categories">See all ›</a></div>
+<div class="g">${[0,1,2].map(n=>fc((S.last+n)%20)).join('')}</div>
+<div class="hd"><h2>How it works</h2></div>
+<div class="g">${[['1. Answer','Every question is freshly generated, so you never run out.'],['2. Level up','Three correct answers in a row unlock the next level in that field.'],['3. Spend tokens','Open a hint for free (half points). Still stuck? Reveal the answer for 10 tokens.']].map(([t,d])=>`<div class="cd"><b>${t}</b><p class="mu" style="margin:6px 0 0">${d}</p></div>`).join('')}</div>`,
+categories:()=>`<h1>Explore fields</h1><p class="mu">Each field has five levels. Your level rises as you answer correctly.</p>
+<div class="sr"><input id="sq" type="search" placeholder="Search fields…" aria-label="Search fields"></div>
+<div class="g">${CT.map((_,i)=>fc(i)).join('')}</div>`,
+practice:()=>{const L=S.lv[cat],q=cur,k=Math.min(3,S.k[cat]);return `<div class="ph"><a class="back" href="#/categories" aria-label="Back to categories">‹</a><div><h1>${h(CT[cat][0])}</h1><div class="meta"><span class="chip c${L}">${LV[L]}</span><span class="st">${[0,1,2].map(n=>`<i class="${n<k?'f':''}"></i>`).join('')}</span><span>Streak ${k}/3</span><span>+${XP[L]} pts</span></div></div></div>
+<div class="cd qc"><p class="qt">${h(q.p)}</p>${q.c?`<pre>${h(q.c)}</pre>`:''}
+${q.o.map((o,i)=>`<button class="op${done&&o===q.a?' right':''}" data-o="${h(o)}"${done||bad.has(o)?' disabled':''}><b>${'ABCD'[i]}</b>${h(o)}</button>`).join('')}
+${hinted?`<p class="hint">💡 ${h(q.hint)}</p>`:''}<div>${fb}</div>
+<div class="acts">${!hinted&&!done?'<button class="bt gh" data-a="hint">Show hint (half points)</button>':''}${hinted&&!done?'<button class="bt gh" data-a="reveal">Reveal answer (10 tokens)</button>':''}${done?'<button class="bt" data-a="next">Next question →</button>':''}<a class="bt gh" href="#/categories">Change field</a></div></div>`},
+profile:()=>{const n=Math.min(10,(S.p/100|0)+1);return `<h1>Your profile</h1><p class="mu">Level ${n}, ${RK[n-1]}</p>
+<div class="hd"><h2>Your name</h2></div>
+<div class="cd"><p class="mu" style="margin:0 0 12px">Choose a unique name for the leaderboard. No email needed.</p>
+<div class="nmf"><input id="nin" maxlength="20" value="${h(S.name)}" placeholder="e.g. CodeNinja" autocomplete="off" aria-label="Your name"><button class="bt" data-a="name">Save name</button></div>
+<p id="nm" class="no" role="status" style="margin:10px 0 0">${h(note)}</p></div>
+<div class="hd"><h2>Overview</h2></div>
+<div class="g">${sc('⭐','Points',S.p)}${sc('🪙','Tokens',S.t)}${sc('🏅',RK[n-1],'Level '+n)}${sc('✅','Solved',S.s)}</div>
+<div class="hd"><h2>Progress by field</h2></div>
+<div class="cd">${CT.map((c,i)=>`<div class="row"><span>${c[1]} ${h(c[0])}</span><span class="chip c${S.lv[i]}">${LV[S.lv[i]]}</span><div class="bar"><i style="width:${pct(i)}%"></i></div></div>`).join('')}</div>
+<p><button class="bt gh" data-a="reset">${rs?'Click again to confirm':'Reset progress'}</button></p>`}
+};
+
+// Right rail: profile card + live leaderboard ranked by points
+function rail(){
+  const n=Math.min(10,(S.p/100|0)+1),joined=!!S.name,ini=s=>s.split(/[ _-]+/).map(w=>w[0]).join('').slice(0,2).toUpperCase();
+  let L=online?players.map(x=>x.id===me?{...x,points:S.p,me:1}:x):(joined?[{name:S.name,points:S.p,me:1}]:[]);
+  L=L.filter(x=>x.name).sort((a,b)=>b.points-a.points||a.name.localeCompare(b.name));
+  const r=L.findIndex(x=>x.me)+1,
+  row=(x,i)=>`<div class="lr${x.me?' me':''}"><span class="rk r${i+1}">${i+1}</span><span class="av" style="--c:${AC[i%5]}">${h(ini(x.name))}</span><div><b>${h(x.name)}</b><small>${x.points} points</small></div></div>`;
+  return `<div class="pc"><div class="bav">🧑‍💻</div><b>${h(S.name||'Guest')}</b><span class="mu">${RK[n-1]}</span><div class="ps"><div><strong>${S.s}</strong>Solved</div><div><strong>${S.p}</strong>Points</div></div></div>
+<div class="cd lb"><h3>🏆 Leaderboard <span class="lv${online?' on':''}">${online?'● Live':'Offline'}</span></h3>
+${L.length?L.slice(0,5).map(row).join(''):'<p class="mu">No players yet.</p>'}
+${joined?(r?`<div class="you"><span class="rk">${r}</span><span class="av" style="--c:#5b3fd9">${h(ini(S.name))}</span><div><b>You are #${r}</b><small>${r==1?'You lead the board!':'Keep learning to climb up!'}</small></div></div>`:''):'<p class="mu" style="margin:12px 0 0">Add your name on the <a class="more" href="#/profile">Profile</a> page to join.</p>'}
+${online?'':'<p class="mu" style="margin:10px 0 0;font-size:.8rem">The shared board is offline here, so only this device is shown.</p>'}</div>`;
+}
+
+function draw(){
+  $('#pt').textContent=S.t;
+  $('#cr').innerHTML=`<span class="mu">SkillForge /</span> <b>${TT[pg]}${pg=='practice'?' / '+h(CT[cat][0]):''}</b>`;
+  $('#app').innerHTML=VIEW[pg]();$('#rail').innerHTML=rail();
+}
+$('#app').oninput=e=>{if(e.target.id!='sq')return;const v=e.target.value.trim().toLowerCase();document.querySelectorAll('#app .tl').forEach(c=>c.hidden=!c.textContent.toLowerCase().includes(v))};
+$('#app').onkeydown=e=>{if(e.key=='Enter'&&e.target.id=='nin')saveName()};
+
+function route(){
+  const[,p,a]=(location.hash||'#/home').split('/');
+  pg=VIEW[p]?p:'home';rs=false;
+  document.documentElement.dataset.p=pg;
+  document.querySelectorAll('nav a[data-p]').forEach(x=>x.classList.toggle('on',x.dataset.p==pg));
+  $('#npr').href='#/practice/'+S.last;
+  if(pg=='practice'){cat=Math.min(19,Math.max(0,+a||0));newQ()}
+  draw();window.scrollTo(0,0);
+}
+
+$('#app').onclick=e=>{
+  const b=e.target.closest('button');if(!b)return;const d=b.dataset;
+  if(d.a=='name'){saveName();return}
+  if(d.o!==undefined){
+    if(done||bad.has(d.o))return;
+    if(d.o===cur.a){
+      const L=S.lv[cat],g=hinted?Math.ceil(XP[L]/2):XP[L];let up='';
+      S.p+=g;S.t+=g;S.s++;S.k[cat]++;
+      if(S.k[cat]>=3&&L<4){S.lv[cat]++;S.k[cat]=0;up=` 🎉 Level up! You are now ${LV[L+1]}.`}
+      done=true;fb=`<p class="ok">✅ Correct! +${g} points and tokens.${up}</p>${ex()}`;save();push();
+    }else{bad.add(d.o);S.k[cat]=0;fb='<p class="no">Not quite. Try another option, or open the hint.</p>';save()}
+  }else if(d.a=='hint')hinted=true;
+  else if(d.a=='reveal'&&hinted&&!done){
+    if(S.t<10)fb='<p class="no">You need 10 tokens to reveal this answer. Solve other questions to earn more.</p>';
+    else{S.t-=10;done=true;fb=`<p class="ok">🔓 Answer: <b>${h(cur.a)}</b></p>${ex()}`}
+    save();
+  }else if(d.a=='next')newQ();
+  else if(d.a=='reset'){if(!rs){rs=true}else{S={...def(),name:S.name,key:S.key};rs=false;save();push()}}
+  draw();
+};
+addEventListener('hashchange',route);
+route();
+initDb().then(draw);
+</script>
+</body>
+</html>j
